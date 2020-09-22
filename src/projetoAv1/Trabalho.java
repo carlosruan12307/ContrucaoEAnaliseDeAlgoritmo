@@ -28,6 +28,13 @@ public class Trabalho {
 				}
 			}
 		}
+		for(int fornecedora = 0; fornecedora < matriz.length; fornecedora++) {
+			for(int mesInicial = 0; mesInicial < 4; mesInicial++) {
+				for(int mesFinal = 0; mesFinal < 1; mesFinal++) {
+					System.out.println(matriz[fornecedora][mesInicial][mesFinal]);
+				}
+			}
+		}
 	}
 
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
