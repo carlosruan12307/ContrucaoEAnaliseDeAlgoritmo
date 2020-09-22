@@ -14,14 +14,18 @@ public class Trabalho {
 		System.out.println(diretorio);
 
 		Contrato[] contratos = new Contrato[contaLinhas(diretorio)];
-		double matriz[][][] = new double[contaLinhas(diretorio)][12][12];
-
+		
 		lerArquivo(diretorio, contratos);
+		
+		double matriz[][][] = new double[contaLinhas(diretorio)][retornaMaiorMes(contratos,
+				tipoMes.INICIO)][retornaMaiorMes(contratos, tipoMes.FIM)];
+
 		for (Contrato i : contratos) {
 			System.out.println(i.toString());
-			matriz[i.getFornecedor()][i.getMesInicio()][i.getMesFim()]=i.getValor();
+			matriz[i.getFornecedor() - 1][i.getMesInicio() - 1][i.getMesFim() - 1] = i.getValor();
 		}
-		System.out.println(matriz[1][1][3]);
+		System.out.println(retornaMaiorMes(contratos, tipoMes.INICIO));
+		System.out.println(retornaMaiorMes(contratos, tipoMes.FIM));
 	}
 
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
@@ -51,11 +55,47 @@ public class Trabalho {
 		return lineCounter.getLineNumber();
 	}
 
+	/**
+	 * Passe como parametro o tipo[mesInicio|mesFim] desejado
+	 * 
+	 * @param contratos
+	 * @param tipo
+	 * @return
+	 */
+	private static int retornaMaiorMes(Contrato[] contratos, tipoMes tipo) {
+		int maiorValor = 0;
+		switch (tipo) {
+		case INICIO:
+			for (Contrato v : contratos) {
+				if (v.getMesInicio() > maiorValor)
+					maiorValor = v.getMesInicio();
+			}
+			break;
+
+		case FIM:
+			for (Contrato v : contratos) {
+				if (v.getMesFim() > maiorValor)
+					maiorValor = v.getMesFim();
+			}
+			break;
+
+		default:
+			System.out.println("Parametro inválido!");
+			break;
+		}
+
+		return maiorValor;
+	}
+
 	private static int converteInt(String string) {
 		return Integer.parseInt(string);
 	}
 
 	private static double converteDouble(String string) {
 		return Double.parseDouble(string);
+	}
+
+	enum tipoMes {
+		INICIO, FIM
 	}
 }
