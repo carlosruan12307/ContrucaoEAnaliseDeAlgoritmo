@@ -12,13 +12,22 @@ public class Trabalho {
 	public static void main(String[] args) throws IOException {
 		String diretorio = System.getProperty("user.dir") + "\\ProjetoUm.txt";
 		System.out.println(diretorio);
+		
 		Contrato[] contratos = new Contrato[contaLinhas(diretorio)];
 		double matriz[][][] = new double[contaLinhas(diretorio)][4][1];
+		
 		lerArquivo(diretorio, contratos);
 		for (Contrato i : contratos) {
 			System.out.println(i.toString());
 		}
-
+		for(int fornecedora = 0; fornecedora < matriz.length; fornecedora++) {
+			for(int mesInicial = 0; mesInicial < 4; mesInicial++) {
+				for(int mesFinal = 0; mesFinal < 1; mesFinal++) {
+					matriz[fornecedora][mesInicial][mesFinal]=contratos[fornecedora].getValor();
+					
+				}
+			}
+		}
 	}
 
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
